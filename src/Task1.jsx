@@ -4,34 +4,57 @@
 // о городе, другой маршрут на его самую известную достопри-
 // мечательность, третий маршрут на другие достопримечатель-
 // ности, четвертый на фотографии города.
+// Задание 2
+// Добавьте к заданию 1 механизм ссылок, который позволит
+// переходить с главной страницы по ссылкам на маршруты.
+// Задание 3
+// Добавьте к заданию 1 передачу параметров при переходе на
+// маршрут.
 import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 import TaskOneOne from "./Component/task1/TaskOneOne";
 import TaskOneTwo from "./Component/task1/TaskOneTwo";
 import TaskOneTree from "./Component/task1/TaskOneTree";
 import TaskOneFour from "./Component/task1/TaskOneFour";
+import News from "./Component/task1/News";
 
+function Info() {
+return <TaskOneOne />;
+}
+function mainAttraction() {
+  return <TaskOneTwo />;
+}
+  function attraction() {
+  return <TaskOneTree />;
+}
+  function photo() {
+   return <TaskOneFour />;
+  }
+  function NotFound() {
+  return <h2>Not found</h2>;
+}
 
 export default function Task1() {
-    return(
-      <>
-      {/* <BrowserRouter> */}
-         <nav>
+  return (
+  <div>
+      <Router>
+         <nav style={{display:"flex" ,flexDirection:"column"}}>
             <Link to="/">Информация о городе</Link>
-            <Link to="two">Достопримечательность</Link>
-            <Link to="tree">Достопримечательности</Link>
-            <Link to="four">Фотографии</Link>
+            <Link to="/mAtr">Достопримечательность</Link>
+            <Link to="/atr">Достопримечательности</Link>
+            <Link to="/photo">Фотографии</Link>
          </nav>
-         
-            <Routes>
-               <Route path="/" element={<TaskOneOne />} />
-               <Route path="two" element={<TaskOneTwo />} />
-               <Route path="tree" element={<TaskOneTree />} />
-               <Route path="four" element={<TaskOneFour />} />
-            </Routes>
-          {/* </BrowserRouter> */}
-      </>
-       
-   )
-}
+
+            <Switch>
+                  <Route exact path="/" component={Info} />
+                  <Route path="/mAtr" component={mainAttraction} />
+                  <Route path="/atr" component={attraction} />
+                  <Route path="/photo" component={photo} />
+                  <Route path="/news/:id"component={News} />
+                  <Route component={NotFound} />
+            </Switch>
+      </Router>
+  </div>
+  );
+  }
